@@ -6,20 +6,27 @@ import (
 	"github.com/Ramadani354/tiket_museum/app/models"
 	"github.com/Ramadani354/tiket_museum/app/repositories"
 	"github.com/Ramadani354/tiket_museum/utils"
+	"gorm.io/gorm"
 )
 
 type AdminService struct {
 	adminRepo repositories.AdminRepository
 }
 
-func NewAdminService() *AdminService {
+func NewAdminService(db *gorm.DB) *AdminService {
 	return &AdminService{
-		adminRepo: repositories.NewAdminRepository(config.DB),
+		adminRepo: repositories.NewAdminRepository(db),
 	}
 }
 
 func (s *AdminService) RegisterAdmin(admin *models.Admin) error {
-	admin.Password = utils.HashPassword(admin.Password)
+	hashedPassword, err := utils.GenerateHashedPassword(admin.Password)
+	if err != nil {
+		return err
+	}
+
+	admin.Password = hashedPassword
+
 	if err := s.adminRepo.CreateAdmin(admin); err != nil {
 		return err
 	}
