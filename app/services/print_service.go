@@ -18,7 +18,7 @@ func NewPrintService(db *gorm.DB) *PrintService {
 
 func (s *PrintService) CreatePrint(ticketID uint, tanggalCetak string) (*models.Print, error) {
 	print := &models.Print{
-		IDTicket:     ticketID,
+		TicketID:     ticketID,
 		TanggalCetak: tanggalCetak,
 	}
 

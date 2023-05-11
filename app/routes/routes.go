@@ -12,6 +12,7 @@ func RegisterRoutes(e *echo.Echo, db *gorm.DB) {
 	// Inisialisasi controller dengan meneruskan objek db
 	adminController := controllers.NewAdminController(db)
 	ticketController := controllers.NewTicketController(db)
+	printController := controllers.NewPrintController(db)
 
 	// Grup rute untuk auth
 	authGroup := e.Group("/auth")
@@ -31,4 +32,6 @@ func RegisterRoutes(e *echo.Echo, db *gorm.DB) {
 	adminGroup := e.Group("/admin")
 	adminGroup.Use(middlewares.JWTMiddleware()) // Middleware otentikasi JWT untuk admin
 	adminGroup.GET("/tickets/kuota", ticketController.GetTicketQuota)
+	adminGroup.POST("/print", printController.CreatePrint)
+
 }
