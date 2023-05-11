@@ -88,3 +88,14 @@ func (c *TicketController) DeleteTicket(ctx echo.Context) error {
 
 	return ctx.JSON(http.StatusOK, "Ticket deleted successfully")
 }
+
+// Tambahkan method GetTicketQuota di controllers/ticket_controller.go
+func (c *TicketController) GetTicketQuota(ctx echo.Context) error {
+	// Panggil repository yang sesuai untuk mengambil data kuota tiket dari database
+	quota, err := c.ticketService.GetTicketQuota()
+	if err != nil {
+		return ctx.JSON(http.StatusInternalServerError, "Failed to get ticket quota")
+	}
+
+	return ctx.JSON(http.StatusOK, quota)
+}

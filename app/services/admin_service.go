@@ -46,3 +46,12 @@ func (s *AdminService) LoginAdmin(email, password string) (*models.Admin, error)
 
 	return admin, nil
 }
+
+func (s *AdminService) GetTicketQuota(adminID uint) (uint, error) {
+	quota, err := s.adminRepo.GetTicketQuota(adminID)
+	if err != nil {
+		return 0, err
+	}
+
+	return quota, nil
+}

@@ -9,6 +9,7 @@ type AdminRepository interface {
 	GetAdminByEmail(email string) (*models.Admin, error)
 	CreateAdmin(admin *models.Admin) error
 	GetAdminByID(adminID uint) (*models.Admin, error)
+	GetTicketQuota(adminID uint) (uint, error)
 }
 
 type adminRepository struct {
@@ -41,4 +42,13 @@ func (r *adminRepository) GetAdminByID(adminID uint) (*models.Admin, error) {
 
 func (r *adminRepository) CreateAdmin(admin *models.Admin) error {
 	return r.db.Create(admin).Error
+}
+
+func (r *adminRepository) GetTicketQuota(adminID uint) (uint, error) {
+	var quota uint
+	result := r.db.Model(&models.Ticket{}).Where("id_admin = ?", adminID).Select("SUM(kuota)").Scan(&quota)
+	if result.Error != nil {
+		return 0, result.Error
+	}
+	return quota, nil
 }

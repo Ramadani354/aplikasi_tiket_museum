@@ -79,3 +79,7 @@ func (s *TicketService) DeleteTicket(ticketID uint) error {
 
 	return nil
 }
+
+func (s *TicketService) GetTicketQuota() (uint, error) {
+	return s.ticketRepo.GetTicketQuota()
+}

@@ -1,8 +1,9 @@
 package models
 
-type Admin struct {
-	ID       uint   `json:"id"`
-	Nama     string `json:"nama"`
+import "gorm.io/gorm"
+
+type Login struct {
+	gorm.Model
 	Email    string `json:"email"`
 	Password string `json:"password"`
 }

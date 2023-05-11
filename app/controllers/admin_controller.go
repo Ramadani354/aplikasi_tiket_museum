@@ -53,3 +53,16 @@ func (c *AdminController) Login(ctx echo.Context) error {
 		"token": token,
 	})
 }
+
+func (c *AdminController) GetTicketQuota(ctx echo.Context) error {
+	// Mendapatkan ID Admin dari token JWT yang ada di header
+	adminID := ctx.Get("user").(uint)
+
+	// Panggil service atau repository yang sesuai untuk mengambil data kuota tiket dari database
+	quota, err := c.adminService.GetTicketQuota(adminID)
+	if err != nil {
+		return ctx.JSON(http.StatusInternalServerError, "Failed to get ticket quota")
+	}
+
+	return ctx.JSON(http.StatusOK, quota)
+}
