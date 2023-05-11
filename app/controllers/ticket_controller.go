@@ -30,7 +30,7 @@ func (c *TicketController) GetAllTickets(ctx echo.Context) error {
 }
 
 func (c *TicketController) CreateTicket(ctx echo.Context) error {
-	payload := new(models.TicketPayload)
+	payload := new(models.Ticket)
 	if err := ctx.Bind(payload); err != nil {
 		return ctx.JSON(http.StatusBadRequest, "Invalid request payload")
 	}
@@ -63,7 +63,7 @@ func (c *TicketController) UpdateTicket(ctx echo.Context) error {
 		return ctx.JSON(http.StatusBadRequest, "Invalid ticket ID")
 	}
 
-	payload := new(models.TicketPayload)
+	payload := new(models.Ticket)
 	if err := ctx.Bind(payload); err != nil {
 		return ctx.JSON(http.StatusBadRequest, "Invalid request payload")
 	}

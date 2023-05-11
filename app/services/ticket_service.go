@@ -25,7 +25,7 @@ func (s *TicketService) GetAllTickets() ([]*models.Ticket, error) {
 	return tickets, nil
 }
 
-func (s *TicketService) CreateTicket(payload *models.TicketPayload) (*models.Ticket, error) {
+func (s *TicketService) CreateTicket(payload *models.Ticket) (*models.Ticket, error) {
 	ticket := &models.Ticket{
 		IDAdmin: payload.IDAdmin,
 		Harga:   payload.Harga,
@@ -49,7 +49,7 @@ func (s *TicketService) GetTicket(ticketID uint) (*models.Ticket, error) {
 	return ticket, nil
 }
 
-func (s *TicketService) UpdateTicket(ticketID uint, payload *models.TicketPayload) (*models.Ticket, error) {
+func (s *TicketService) UpdateTicket(ticketID uint, payload *models.Ticket) (*models.Ticket, error) {
 	ticket, err := s.ticketRepo.GetTicketByID(ticketID)
 	if err != nil {
 		return nil, err
