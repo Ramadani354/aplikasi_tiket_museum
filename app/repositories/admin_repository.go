@@ -8,6 +8,7 @@ import (
 type AdminRepository interface {
 	GetAdminByEmail(email string) (*models.Admin, error)
 	CreateAdmin(admin *models.Admin) error
+	GetAdminByID(adminID uint) (*models.Admin, error)
 }
 
 type adminRepository struct {
@@ -27,6 +28,14 @@ func (r *adminRepository) GetAdminByEmail(email string) (*models.Admin, error) {
 		return nil, err
 	}
 
+	return admin, nil
+}
+
+func (r *adminRepository) GetAdminByID(adminID uint) (*models.Admin, error) {
+	admin := new(models.Admin)
+	if err := r.db.First(admin, adminID).Error; err != nil {
+		return nil, err
+	}
 	return admin, nil
 }
 

@@ -30,11 +30,11 @@ func (c *AdminController) Register(ctx echo.Context) error {
 		return ctx.JSON(http.StatusInternalServerError, "Failed to register admin")
 	}
 
-	return ctx.JSON(http.StatusOK, "Admin registered successfully")
+	return ctx.JSON(http.StatusOK, payload)
 }
 
 func (c *AdminController) Login(ctx echo.Context) error {
-	payload := new(models.LoginPayload)
+	payload := new(models.Login)
 	if err := ctx.Bind(payload); err != nil {
 		return ctx.JSON(http.StatusBadRequest, "Invalid request payload")
 	}
