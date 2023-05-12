@@ -56,7 +56,7 @@ func (s *TicketService) UpdateTicket(ticketID uint, payload *models.Ticket) (*mo
 	}
 
 	ticket.Harga = payload.Harga
-	ticket.Kuota = payload.Kuota
+	ticket.Kuota = uint(payload.Kuota)
 
 	err = s.ticketRepo.UpdateTicket(ticket)
 	if err != nil {
@@ -82,4 +82,13 @@ func (s *TicketService) DeleteTicket(ticketID uint) error {
 
 func (s *TicketService) GetTicketQuota() (uint, error) {
 	return s.ticketRepo.GetTicketQuota()
+}
+
+func (s *TicketService) UpdateTicketKuota(ticketID uint, kuota int) error {
+	err := s.ticketRepo.UpdateTicketKuota(ticketID, uint(kuota)) // Ubah tipe data kuota menjadi uint
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

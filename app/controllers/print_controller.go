@@ -11,6 +11,9 @@ import (
 type PrintController struct {
 	printService *services.PrintService
 }
+type request struct {
+	TicketID uint `json:"ticket_id"`
+}
 
 func NewPrintController(db *gorm.DB) *PrintController {
 	printService := services.NewPrintService(db)
@@ -23,8 +26,7 @@ func NewPrintController(db *gorm.DB) *PrintController {
 func (c *PrintController) CreatePrint(ctx echo.Context) error {
 	// Buat struct untuk menampung data dari permintaan
 	type request struct {
-		TicketID     uint   `json:"ticket_id"`
-		TanggalCetak string `json:"tanggal_cetak"`
+		TicketID uint `json:"ticket_id"`
 	}
 
 	// Bind data dari permintaan ke struct request
@@ -36,7 +38,7 @@ func (c *PrintController) CreatePrint(ctx echo.Context) error {
 	}
 
 	// Panggil service untuk membuat cetakan tiket
-	print, err := c.printService.CreatePrint(req.TicketID, req.TanggalCetak)
+	print, err := c.printService.CreatePrint(req.TicketID)
 	if err != nil {
 		// Tangani kesalahan jika terjadi kesalahan dalam membuat cetakan tiket
 		return ctx.JSON(http.StatusInternalServerError, map[string]string{

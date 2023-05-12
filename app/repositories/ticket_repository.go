@@ -12,6 +12,7 @@ type TicketRepository interface {
 	UpdateTicket(ticket *models.Ticket) error
 	DeleteTicket(ticket *models.Ticket) error
 	GetTicketQuota() (uint, error)
+	UpdateTicketKuota(ticketID uint, kuota uint) error
 }
 
 type ticketRepository struct {
@@ -63,4 +64,16 @@ func (r *ticketRepository) GetTicketQuota() (uint, error) {
 		return 0, result.Error
 	}
 	return quota, nil
+}
+
+func (r *ticketRepository) UpdateTicketKuota(ticketID uint, kuota uint) error {
+	ticket := &models.Ticket{}
+	if err := r.db.First(ticket, ticketID).Error; err != nil {
+		return err
+	}
+	ticket.Kuota = kuota
+	if err := r.db.Save(ticket).Error; err != nil {
+		return err
+	}
+	return nil
 }
