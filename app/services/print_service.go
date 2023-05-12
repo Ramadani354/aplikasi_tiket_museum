@@ -3,16 +3,15 @@ package services
 import (
 	"github.com/Ramadani354/tiket_museum/app/models"
 	"github.com/Ramadani354/tiket_museum/app/repositories"
-	"gorm.io/gorm"
 )
 
 type PrintService struct {
 	printRepo repositories.PrintRepository
 }
 
-func NewPrintService(db *gorm.DB) *PrintService {
-	return &PrintService{
-		printRepo: repositories.NewPrintRepository(db),
+func NewPrintService(repo repositories.PrintRepository) PrintService {
+	return PrintService{
+		printRepo: repo,
 	}
 }
 
