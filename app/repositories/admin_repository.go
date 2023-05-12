@@ -1,6 +1,8 @@
 package repositories
 
 import (
+	"log"
+
 	"github.com/Ramadani354/tiket_museum/app/models"
 	"gorm.io/gorm"
 )
@@ -26,6 +28,7 @@ func (r *adminRepository) GetAdminByEmail(email string) (*models.Admin, error) {
 	admin := new(models.Admin)
 	err := r.db.Where("email = ?", email).First(admin).Error
 	if err != nil {
+		log.Println("Error retrieving admin:", err)
 		return nil, err
 	}
 
@@ -46,7 +49,7 @@ func (r *adminRepository) CreateAdmin(admin *models.Admin) error {
 
 func (r *adminRepository) GetTicketQuota(adminID uint) (uint, error) {
 	var quota uint
-	result := r.db.Model(&models.Ticket{}).Where("id_admin = ?", adminID).Select("SUM(kuota)").Scan(&quota)
+	result := r.db.Model(&models.Ticket{}).Where("admin_id = ?", adminID).Select("SUM(quota)").Scan(&quota)
 	if result.Error != nil {
 		return 0, result.Error
 	}

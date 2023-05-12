@@ -64,5 +64,7 @@ func (c *AdminController) GetTicketQuota(ctx echo.Context) error {
 		return ctx.JSON(http.StatusInternalServerError, "Failed to get ticket quota")
 	}
 
-	return ctx.JSON(http.StatusOK, quota)
+	return ctx.JSON(http.StatusOK, echo.Map{
+		"quota": quota,
+	})
 }
