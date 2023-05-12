@@ -5,16 +5,13 @@ import (
 
 	"github.com/Ramadani354/tiket_museum/app/services"
 	"github.com/labstack/echo/v4"
-	"gorm.io/gorm"
 )
 
 type PrintController struct {
-	printService *services.PrintService
+	printService services.PrintService
 }
 
-func NewPrintController(db *gorm.DB) *PrintController {
-	printService := services.NewPrintService(db)
-
+func NewPrintController(printService services.PrintService) *PrintController {
 	return &PrintController{
 		printService: printService,
 	}
